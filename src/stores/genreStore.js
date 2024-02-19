@@ -16,6 +16,19 @@ export const useGenreStore = defineStore('genre', {
         console.error('ジャンルデータの取得ができませんでした。', error);
       }
     },
-    
+    async addGenre(newGenre){
+      console.log(newGenre)
+      try {
+        const response = await axios.post('http://localhost:5000/genres', newGenre)
+        const addedGenre = response.data
+        // 追加したジャンルデータをthis.genresに追加する。
+        this.genres.push({
+          id: addedGenre.id,
+          name: addedGenre.name
+        })
+      } catch (error) {
+        console.log("保存ができませんでした", error);
+      }
+    }
   }
 })
