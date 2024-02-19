@@ -27,8 +27,17 @@ export const useTaskStore = defineStore('task', {
         this.filteredTasks = [...this.tasks];
       } else {
         this.filteredTasks = this.tasks.filter(task => genreId === task.genreId)
-        console.log(this.filteredTasks)
       }
     },
+    async addTask(newTask) {
+      try {
+        const response = await axios.post('http://localhost:5000/tasks', newTask)
+        const addedTask = response.data;
+        this.tasks.push(addedTask)
+
+      } catch (error) {
+        console.log("保存ができませんでした", error);
+      }
+    }
   }
 })

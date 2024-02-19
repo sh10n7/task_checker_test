@@ -10,7 +10,7 @@
             @click="showModal = true"
           />
         </div>
-         <ModalComp body="taskBody" v-model="showModal"/>
+         <ModalComp body="taskBody" v-model="showModal" />
        </div>
        <div class="task_field" v-if="showTasks">
         <TaskComp 
