@@ -1,6 +1,8 @@
 <template>
-    <div class="task">
-      <span class="task_date">{{ task.deadlineDate }}</span>
+    <div class="task" :style="taskStyle">
+      <span class="task_date">
+        {{ formatDate(task.deadlineDate) }}
+      </span>
       <div class="task_text_contents">
         <h3 class="task_title">{{ task.name}}</h3>
         <p class="task_sentence">{{ task.explanation }}</p>
@@ -21,7 +23,27 @@ export default {
  },
  props:{
   task: Object
- }
+ },
+ //日付の表示変換をするメソッド
+ methods: {
+  formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // getMonth()は0から始まる
+    const day = date.getDate();
+    return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    }
+  },
+  computed: {
+    taskStyle() {
+      // 現在の日時より deadlineDate が後であるかをチェック
+      const isDeadlineAfterToday = new Date(this.task.deadlineDate) > new Date();
+      // 条件に基づいてスタイルオブジェクトを返す
+      return {
+        backgroundColor: isDeadlineAfterToday ? 'white' : 'rgb(250, 194, 194)',
+      };
+    }
+  }
 }
 </script>
 
