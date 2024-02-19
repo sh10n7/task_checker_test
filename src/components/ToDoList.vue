@@ -7,8 +7,9 @@
          <AddCircleIcon
            class="add_circle_outline_icon"
            fontSize="small"
+           @click="showModal = true"
          />
-         <ModalComp body="taskBody"/>
+         <ModalComp body="taskBody" v-model="showModal"/>
        </div>
        <div class="task_field">
         <TaskComp 
@@ -35,8 +36,13 @@ export default {
     TaskComp,
     ModalComp
   },
+  data() {
+    return {
+      showModal: false
+    }
+  },
   props: {
-    tasks: []
+    tasks: [],
   },
 }
 </script>

@@ -1,5 +1,4 @@
 <template>
-  <button @click="showModal = true">開くボタン</button>
   <ModalWindow v-model="showModal">
     <component :is="component" />
   </ModalWindow>

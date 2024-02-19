@@ -26,7 +26,6 @@ export default {
   computed: {
     internalValue: {
       get() {
-        console.log(this.modelValue)
         return this.modelValue;
       },
       set(newValue) {

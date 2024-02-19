@@ -3,8 +3,8 @@
     <HeaderComp />
     <div class="genre">
       <SelectComp :genres="genres"/>
-      <AddCircleIcon class="add_circle_outline_icon" fontSize="medium"/>
-      <ModalComp body="genreBody"/>
+      <AddCircleIcon class="add_circle_outline_icon" fontSize="medium" @click="showModal = true"/>
+      <ModalComp body="genreBody" v-model="showModal"/>
     </div>
     <ToDoListComp :tasks="tasks"/>
 </template>
@@ -29,7 +29,8 @@ export default {
   data() {
     return {
       genres: [],
-      tasks: []
+      tasks: [],
+      showModal: false
     }
   },
   async mounted() {
