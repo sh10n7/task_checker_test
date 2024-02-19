@@ -42,7 +42,10 @@ export default {
     }
   },
   props: {
-    tasks: [],
+    tasks: {
+      type: Array, //Array型のtasksを取得
+      default:() => []  //デフォルト値には[]を設定
+    },
   },
 }
 </script>
