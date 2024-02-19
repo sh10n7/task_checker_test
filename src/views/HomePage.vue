@@ -2,11 +2,11 @@
 <template>
     <HeaderComp />
     <div class="genre">
-      <SelectComp :genres="genres"/>
+      <SelectComp :genres="genreStore.genres"/>
       <AddCircleIcon class="add_circle_outline_icon" fontSize="medium" @click="showModal = true"/>
       <ModalComp body="genreBody" v-model="showModal"/>
     </div>
-    <ToDoListComp :tasks="tasks"/>
+    <ToDoListComp :tasks="taskStore.tasks" />
 </template>
 
 <script>
@@ -15,7 +15,8 @@ import SelectComp from '../components/Select.vue'
 import ToDoListComp from '../components/ToDoList.vue'
 import AddCircleIcon from 'vue-material-design-icons/PlusCircleOutline.vue'
 import ModalComp from '../components/Modal.vue'
-import axios from 'axios';
+import { useGenreStore } from '../stores/genreStore'
+import { useTaskStore } from '../stores/taskStore'
 
 export default {
   name: 'HomePage',
@@ -30,31 +31,16 @@ export default {
     return {
       genres: [],
       tasks: [],
-      showModal: false
+      showModal: false,
+      genreStore: useGenreStore(),
+      taskStore: useTaskStore(),
     }
   },
   async mounted() {
-    await this.fetchGenres();
-    await this.fetchTasks();
+    // マウントされた時にgenreデータとtaskデータを取得する。
+    await this.genreStore.fetchAllGenres();
+    await this.taskStore.fetchAllTasks();
   },
-  methods: {
-    async fetchGenres() {
-      try {
-        const response = await axios.get('http://localhost:5000/genres');
-        this.genres = response.data;
-      } catch (error) {
-        console.error('ジャンルデータの取得ができませんでした。', error);
-      }
-    },
-    async fetchTasks() {
-      try {
-        const response = await axios.get('http://localhost:5000/tasks');
-        this.tasks = response.data;
-      } catch (error) {
-        console.error('タスクデータの取得ができませんでした。', error);
-      }
-    }
-  }
 }
 </script>
 
