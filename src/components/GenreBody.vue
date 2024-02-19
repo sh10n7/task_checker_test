@@ -1,21 +1,20 @@
 <template>
   <div className="modal_body">
       <ul>
-        <li class="genre_title">
-          <span>ジャンルの名前</span>
-          <CancelIcon />
+        <li class="genre_title" v-for="genre in genreStore.genres" :key="genre.id">
+          <span>{{ genre.name }}</span>
+          <CancelIcon @click="deleteGenre(genre.id)"/>
         </li>
       </ul>
       <form>
         <input type="text" v-model="genre.name"/>
-        <input class="input_submit" type="button" value="追加" @click="submit"/>
+        <input class="input_submit" type="button" value="追加" @click="submitGenre"/>
       </form>
   </div>
 </template>
 <script>
-import axios from 'axios';
 import CancelIcon from 'vue-material-design-icons/CloseCircle.vue'
-
+import { useGenreStore } from '../stores/genreStore'
 export default {
   name: 'GenreBodyComp',
   components: {
@@ -25,20 +24,27 @@ export default {
     return{
       genre: {
         name: ''
-      }
+      },
+      genreStore: useGenreStore(),
     }
   },
   methods: {
-    async submit() {
+    async submitGenre() {
+      // genreStore.addGenre()を呼び出す
       try {
-        const response = await axios.post('http://localhost:5000/genres', this.genre)
-        console.log(response.data)
-        // 成功した場合、トップページ（例: '/'）へリダイレクト
-        // this.$router.push('/');
-      } catch (error) {
-        console.log("保存ができませんでした", error);
+        await this.genreStore.addGenre(this.genre)
+        this.genre.name = ''
+      } catch(error) {
+        console.log('ジャンルの保存ができませんでした', error);
       }
-    }
+    },
+    async deleteGenre(genreId) {
+      try {
+        await this.genreStore.removeGenre(genreId);
+      }catch(error) {
+        console.log('ジャンルの削除ができませんでした', error);
+      }
+    },
   }
 
 }
