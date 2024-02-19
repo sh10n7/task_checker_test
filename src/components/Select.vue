@@ -1,5 +1,5 @@
 <template>
-    <select class="select" v-model="internalValue">
+    <select class="select">
       <option v-for="genre in genres" :key="genre._id" :value="genre._id">
         {{genre.name}}
       </option>
@@ -11,29 +11,7 @@ export default {
   name: 'SelectComp',
   props: {
     genres: Array,
-    modelValue: null
   },
-  // data(){
-  //   return {
-  //     selectedGenreId: null
-  //   };
-  // },
-  // watch:{
-  //   selectedGenreId(newVal) {
-  //   this.$emit('update:selectedGenreId', newVal);
-  //   }
-  // },
-  computed: {
-    internalValue: {
-      get() {
-        return this.modelValue;
-      },
-      set(newValue) {
-        console.log(newValue)
-        this.$emit('update:modelValue', newValue); // Vue 3では`input`イベントの代わりに`update:modelValue`を使用
-      }
-    }
-  }
 }
 
 
