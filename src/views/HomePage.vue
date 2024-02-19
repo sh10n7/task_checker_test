@@ -2,11 +2,11 @@
 <template>
     <HeaderComp />
     <div class="genre">
-      <SelectComp :genres="genreStore.genres"/>
+      <SelectComp :genres="genreStore.genres" @change="changeSelectedGenreId"/>
       <AddCircleIcon class="add_circle_outline_icon" fontSize="medium" @click="showModal = true"/>
       <ModalComp body="genreBody" v-model="showModal"/>
     </div>
-    <ToDoListComp :tasks="taskStore.tasks" />
+    <ToDoListComp :tasks="taskStore.filteredTasks" />
 </template>
 
 <script>
@@ -34,6 +34,14 @@ export default {
       showModal: false,
       genreStore: useGenreStore(),
       taskStore: useTaskStore(),
+    }
+  },
+  methods: {
+    changeSelectedGenreId(e) {
+      // 選択したデータの番号を数値化する
+      const selectedGenreId = Number(e.target.value);
+      const taskStore = useTaskStore();
+      taskStore.filterTasks(selectedGenreId);
     }
   },
   async mounted() {

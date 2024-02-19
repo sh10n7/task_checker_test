@@ -1,12 +1,13 @@
 <template>
     <select class="select">
-      <option v-for="genre in genres" :key="genre._id" :value="genre._id">
+      <option v-for="genre in genres" :key="genre.id" :value="genre.id">
         {{genre.name}}
       </option>
     </select>
 </template>
 
 <script>
+
 export default {
   name: 'SelectComp',
   props: {
