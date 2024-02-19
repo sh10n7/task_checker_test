@@ -29,6 +29,16 @@ export const useGenreStore = defineStore('genre', {
       } catch (error) {
         console.log("保存ができませんでした", error);
       }
+    },
+    async removeGenre(removeId) {
+      try {
+        // サーバーからジャンルを削除
+        await axios.delete(`http://localhost:5000/genres/${removeId}`);
+        // ストアの状態からも削除
+        this.genres = this.genres.filter(genre => genre.id !== removeId);
+      } catch (error) {
+          console.error('ジャンルの削除に失敗しました。', error);
+      }
     }
   }
 })

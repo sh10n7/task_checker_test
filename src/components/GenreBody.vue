@@ -3,12 +3,12 @@
       <ul>
         <li class="genre_title" v-for="genre in genreStore.genres" :key="genre.id">
           <span>{{ genre.name }}</span>
-          <CancelIcon />
+          <CancelIcon @click="deleteGenre(genre.id)"/>
         </li>
       </ul>
       <form>
         <input type="text" v-model="genre.name"/>
-        <input class="input_submit" type="button" value="追加" @click="submit"/>
+        <input class="input_submit" type="button" value="追加" @click="submitGenre"/>
       </form>
   </div>
 </template>
@@ -29,7 +29,7 @@ export default {
     }
   },
   methods: {
-    async submit() {
+    async submitGenre() {
       // genreStore.addGenre()を呼び出す
       try {
         await this.genreStore.addGenre(this.genre)
@@ -37,7 +37,14 @@ export default {
       } catch(error) {
         console.log('ジャンルの保存ができませんでした', error);
       }
-    }
+    },
+    async deleteGenre(genreId) {
+      try {
+        await this.genreStore.removeGenre(genreId);
+      }catch(error) {
+        console.log('ジャンルの削除ができませんでした', error);
+      }
+    },
   }
 
 }
