@@ -1,6 +1,6 @@
 <template>
   <ModalWindow v-model="showModal">
-    <component :is="component" />
+    <component :is="component" @close-modal="$emit('close-modal')"/>
   </ModalWindow>
 </template>
 

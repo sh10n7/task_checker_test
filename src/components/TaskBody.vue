@@ -50,7 +50,6 @@ export default {
       }
     },
     genreSelect(e) {
-      console.log(e.target.value)
       this.task.genreId = Number(e.target.value)
     }
   },
