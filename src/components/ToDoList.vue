@@ -1,7 +1,7 @@
 <template>
      <div class="task_list">
        <div class="section">
-         <MenuIcon class="section_ele" />
+         <MenuIcon class="section_ele" @click="toggleShowTasks"/>
          <span class="section_ele">{{ status }}</span>
          <div v-if="status === 'ToDo'">
           <AddCircleIcon
@@ -12,7 +12,7 @@
         </div>
          <ModalComp body="taskBody" v-model="showModal"/>
        </div>
-       <div class="task_field">
+       <div class="task_field" v-if="showTasks">
         <TaskComp 
           v-for="task in tasks"
           :key="task.id"
@@ -38,7 +38,8 @@ export default {
   },
   data() {
     return {
-      showModal: false
+      showModal: false,
+      showTasks: true
     }
   },
   props: {
@@ -48,6 +49,12 @@ export default {
     },
     status: String
   },
+  methods: {
+    toggleShowTasks() {
+      // メニューアイコンの表示・非表示切り替え
+      this.showTasks = !this.showTasks;
+    }
+  }
 }
 </script>
 
