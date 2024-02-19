@@ -6,7 +6,11 @@
       <AddCircleIcon class="add_circle_outline_icon" fontSize="medium" @click="showModal = true"/>
       <ModalComp body="genreBody" v-model="showModal"/>
     </div>
-    <ToDoListComp :tasks="taskStore.filteredTasks" />
+    <div class="contents">
+      <div  v-for="(status, index) in tasksStatusElements" :key="index">
+        <ToDoListComp :tasks="filterTasksByStatus(status)" :status="status" />
+      </div>
+    </div>
 </template>
 
 <script>
@@ -31,6 +35,14 @@ export default {
     return {
       genres: [],
       tasks: [],
+      tasksStatusElements: [
+        "ToDo",
+        "Pending",
+        "Doing(ToDay)",
+        "WIP",
+        "Check",
+        "Done",
+      ],
       showModal: false,
       genreStore: useGenreStore(),
       taskStore: useTaskStore(),
@@ -42,7 +54,13 @@ export default {
       const selectedGenreId = Number(e.target.value);
       const taskStore = useTaskStore();
       taskStore.filterTasks(selectedGenreId);
-    }
+    },
+    filterTasksByStatus(status) {
+      //statusで受け取った値がtaskStatusの配列の何番目の数値か調べる。
+      const index = this.tasksStatusElements.indexOf(status)
+      //indexとtask.statusの値が同じ場合のみデータ取得する。
+      return this.taskStore.filteredTasks.filter(task => task.status == index);
+    },
   },
   async mounted() {
     // マウントされた時にgenreデータとtaskデータを取得する。
@@ -53,6 +71,13 @@ export default {
 </script>
 
 <style>
+  .contents {
+    display: flex;
+    height: calc(100vh - 120px);
+    width: 100%;
+    overflow: auto;
+  }
+
   .genre {
     display: flex;
     justify-content: center;

@@ -20,8 +20,8 @@ export const useTaskStore = defineStore('task', {
         console.error('タスクデータの取得ができませんでした。', error);
       }
     },
+    // ジャンルデータ変更に伴うタスクのフィルタリング
     async filterTasks(genreId) {
-      console.log(genreId)
       //取得したselectedGenreIdとtaskのidが同一だったらthis.tasksのデータを更新
       if(genreId === 0) {
         this.filteredTasks = [...this.tasks];
@@ -29,8 +29,6 @@ export const useTaskStore = defineStore('task', {
         this.filteredTasks = this.tasks.filter(task => genreId === task.genreId)
         console.log(this.filteredTasks)
       }
-    }
-
-    
+    },
   }
 })

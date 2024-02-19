@@ -1,14 +1,15 @@
 <template>
-   <div class="contents">
      <div class="task_list">
        <div class="section">
          <MenuIcon class="section_ele" />
-         <span class="section_ele">ToDo</span>
-         <AddCircleIcon
-           class="add_circle_outline_icon"
-           fontSize="small"
-           @click="showModal = true"
-         />
+         <span class="section_ele">{{ status }}</span>
+         <div v-if="status === 'ToDo'">
+          <AddCircleIcon
+            class="add_circle_outline_icon"
+            fontSize="small"
+            @click="showModal = true"
+          />
+        </div>
          <ModalComp body="taskBody" v-model="showModal"/>
        </div>
        <div class="task_field">
@@ -19,7 +20,6 @@
         />
        </div>
      </div>
-   </div>
 </template>
 
 <script>
@@ -46,6 +46,7 @@ export default {
       type: Array, //Array型のtasksを取得
       default:() => []  //デフォルト値には[]を設定
     },
+    status: String
   },
 }
 </script>
@@ -93,12 +94,5 @@ export default {
     right: 10px;
     font-size: 25px;
     color: rgb(70, 70, 70);
-  }
-
-  .contents {
-    display: flex;
-    height: calc(100vh - 120px);
-    width: 100%;
-    overflow: auto;
   }
 </style>
