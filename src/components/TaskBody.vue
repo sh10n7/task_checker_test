@@ -9,7 +9,7 @@
         <h4 class="input_title">タイトル</h4>
         <input type="text" v-model="task.name"/>
         <h4 class="input_title">説明</h4>
-        <textarea v-model="task.explanation"/>
+        <textarea v-model="task.explanation" />
         <h4 class="input_title">期限</h4>
         <input class="input_date" type="date" v-model="task.deadlineDate"/>
       </div>
@@ -46,11 +46,20 @@ export default {
   },
   methods: {
     async submit() {
-      try {
-        await this.taskStore.addTask(this.task);
-        this.$emit("close-modal");
-      }catch(error) {
-        console.log("タスクの登録ができませんでした", error)
+      if(this.task.id) {
+        try{
+          await this.taskStore.updateTask(this.task);
+          this.$emit("close-modal")
+        }catch(error){
+          console.log("!タスクの更新ができませんでした", error);
+        }
+      } else {
+        try {
+          await this.taskStore.addTask(this.task);
+          this.$emit("close-modal");
+        }catch(error) {
+          console.log("タスクの登録ができませんでした", error)
+        }
       }
     },
     genreSelect(e) {

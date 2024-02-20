@@ -47,7 +47,7 @@ export const useTaskStore = defineStore('task', {
     async removeTask(task) {
       try{
         const response = await axios.delete(`http://localhost:5000/tasks/${task.id}`, task); 
-        const index = this.tasks.findIndex(task => task.id === response.data.id);
+        const index = this.tasks.findIndex(t => t.id === response.data.id);
         if (index !== -1) {
           this.tasks.splice(index, 1);
         }
@@ -55,7 +55,19 @@ export const useTaskStore = defineStore('task', {
       } catch(error) {
         console.log('タスクの削除に失敗しました。', error)
       }
+    },
+    async updateTask(task) {
+      try{
+        const response = await axios.put(`http://localhost:5000/tasks/${task.id}`, task)
+        console.log(response.data)
+        //response.data.idと同じidのデータをthis.tasksから探し、response.dataのデータを上書きする。
+        const index = this.tasks.findIndex(t => t.id === task.id);
+        if (index !== -1) {
+          this.tasks[index] = response.data;
+        }
+      }catch(error){
+        console.log('タスクの更新に失敗しました', error);
+      }
     }
-    
   }
 })

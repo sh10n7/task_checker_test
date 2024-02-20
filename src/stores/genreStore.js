@@ -38,6 +38,6 @@ export const useGenreStore = defineStore('genre', {
       } catch (error) {
           console.error('ジャンルの削除に失敗しました。', error);
       }
-    }
+    },
   }
 })
