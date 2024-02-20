@@ -64,8 +64,12 @@ export default {
   },
   async mounted() {
     // マウントされた時にgenreデータとtaskデータを取得する。
-    await this.genreStore.fetchAllGenres();
-    await this.taskStore.fetchAllTasks();
+    try {
+      await this.genreStore.fetchAllGenres();
+      await this.taskStore.fetchAllTasks();
+    } catch(error) {
+      console.error("データの読み込み中にエラーが発生しました：", error);
+    }
   },
 }
 </script>
