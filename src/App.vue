@@ -1,14 +1,18 @@
 <template>
-  <HomePage />
+  <!-- <HomePage /> -->
+  <AuthComponent />
 </template>
 
 <script>
-import HomePage from './views/HomePage.vue'
+// import HomePage from './views/HomePage.vue'
+import AuthComponent from './components/AuthComponent.vue'
 
 export default {
+
   name: 'App',
   components: {
-    HomePage
+    // HomePage
+    AuthComponent
   }
 }
 </script>
