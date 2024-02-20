@@ -1,17 +1,10 @@
 <template>
   <div>
-    <h1>サインイン & サインアップ</h1>
-    <div v-if="user">
-      <p>ログインユーザー: {{ user.email }}</p>
-      <button @click="handleSignOut">ログアウト</button>
-    </div>
-    <div v-else>
-      <p>ログインしていません</p>
-      <input type="email" v-model="email" placeholder="メールアドレス">
-      <input type="password" v-model="password" placeholder="パスワード">
-      <button @click="handleSignUp">サインアップ</button>
-      <button @click="handleSignIn">サインイン</button>
-    </div>
+    <p>ログインしていません</p>
+    <input type="email" v-model="email" placeholder="メールアドレス">
+    <input type="password" v-model="password" placeholder="パスワード">
+    <button @click="handleSignUp">サインアップ</button>
+    <button @click="handleSignIn">サインイン</button>
   </div>
 </template>
 
