@@ -68,7 +68,14 @@ export default {
         this.showModal = !this.showModal
     },
     changeSelectedStatus(e){
-      console.log(e.target.value)
+      try {
+        const taskId = this.task.id
+        const statusId = e.target.value
+        this.taskStore.updateTaskStatus(taskId, statusId)
+      }catch(error){
+        console.log
+      }
+      
     }
   },
 }
