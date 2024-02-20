@@ -1,7 +1,13 @@
 <template>
-    <select class="select" :value="initialValue">
+    <select v-if="genres" class="select" :value="initialValue">
       <option v-for="genre in genres" :key="genre.id" :value="genre.id">
         {{genre.name}}
+      </option>
+    </select>
+
+    <select v-else-if="taskStatus" class="select" :value="initialValue">
+      <option v-for="(status, index) in taskStatus" :key="index" :value="index">
+        {{ status }}
       </option>
     </select>
 </template>
@@ -12,6 +18,7 @@ export default {
   name: 'SelectComp',
   props: {
     genres: Array,
+    taskStatus: Array,
     initialValue: String
   },
 }
