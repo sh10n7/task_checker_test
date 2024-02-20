@@ -34,22 +34,6 @@ export default {
   props:{
     task: Object
   },
- //日付の表示変換をするメソッド
- methods: {
-  formatDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1; // getMonth()は0から始まる
-    const day = date.getDate();
-    return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-    },
-  selectTask(task){
-      this.taskStore.specificTask(task)
-      // モーダルのステータスも変更
-      this.showModal = !this.showModal
-    },
-  },
-  //選択したtaskのidを取得し、specificTaskに状態管理
   computed: {
     taskStyle() {
       // 現在の日時より deadlineDate が後であるかをチェック
@@ -59,7 +43,23 @@ export default {
         backgroundColor: isDeadlineAfterToday ? 'white' : 'rgb(250, 194, 194)',
       };
     }
-  }
+  },
+  //日付の表示変換をするメソッド
+  methods: {
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1; // getMonth()は0から始まる
+      const day = date.getDate();
+      return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+   },
+  // クリックしたタスクを保持する記述
+  selectTask(task){
+      this.taskStore.specificTask(task)
+      // モーダルのステータスも変更
+      this.showModal = !this.showModal
+    },
+  },
 }
 </script>
 
