@@ -11,10 +11,12 @@
     "@kouts/vue-modal": "^5.0.0",
     "axios": "^1.6.7",
     "core-js": "^3.8.3",
+    "firebase": "^10.8.0",
     "material-design-icons": "^3.0.1",
     "pinia": "^2.1.7",
     "vue": "^3.2.13",
-    "vue-material-design-icons": "^5.3.0"
+    "vue-material-design-icons": "^5.3.0",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
