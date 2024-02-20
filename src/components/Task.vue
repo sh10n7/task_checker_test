@@ -8,7 +8,7 @@
         <p class="task_sentence">{{ task.explanation }}</p>
       </div>
       <div class="task_input_contents">
-        <SelectComp />
+        <SelectComp :taskStatus="taskStatus" :value="task.status" @change="changeSelectedStatus"/>
       </div>
     </div>
     <ModalComp body="taskBody" v-model="showModal" @close-modal="showModal = false"/>
@@ -28,7 +28,15 @@ export default {
  data() {
   return{
     showModal: false,
-    taskStore: useTaskStore()
+    taskStore: useTaskStore(),
+    taskStatus: [
+      "ToDo",
+      "Pending",
+      "Doing(ToDay)",
+      "WIP",
+      "Check",
+      "Done",
+      ]
     }
   },
   props:{
@@ -52,13 +60,16 @@ export default {
       const month = date.getMonth() + 1; // getMonth()は0から始まる
       const day = date.getDate();
       return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-   },
-  // クリックしたタスクを保持する記述
-  selectTask(task){
-      this.taskStore.specificTask(task)
-      // モーダルのステータスも変更
-      this.showModal = !this.showModal
     },
+    // クリックしたタスクを保持する記述
+    selectTask(task){
+        this.taskStore.specificTask(task)
+        // モーダルのステータスも変更
+        this.showModal = !this.showModal
+    },
+    changeSelectedStatus(e){
+      console.log(e.target.value)
+    }
   },
 }
 </script>
