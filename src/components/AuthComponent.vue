@@ -19,14 +19,14 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '../firebase';
-
+import { useRouter } from 'vue-router'; 
 
 export default {
   setup() {
     const user = ref(null);
     const email = ref('');
     const password = ref('');
-
+    const router = useRouter();
 
     onMounted(() => {
       auth.onAuthStateChanged((authUser) => {
@@ -47,6 +47,7 @@ export default {
     const handleSignIn = async () => {
       try {
         await signInWithEmailAndPassword(auth, email.value, password.value);
+        router.push('/home'); // ログイン後に/homeにリダイレクト
       } catch (error) {
         alert(error.message);
       }
