@@ -5,7 +5,8 @@ export const useTaskStore = defineStore('task', {
   state: () => ({
     tasks: [], // tasksを配列として初期化
     filteredTasks: [],
-    selectedGenreId: 0, // 初期値のジャンルidを指定(プルダウン)
+    selectedGenreId: null, // 初期値のジャンルidを指定(プルダウン)
+    selectedTask: null // クリック時に選択したタスクを管理する
   }),
 
   actions: {
@@ -27,8 +28,34 @@ export const useTaskStore = defineStore('task', {
         this.filteredTasks = [...this.tasks];
       } else {
         this.filteredTasks = this.tasks.filter(task => genreId === task.genreId)
-        console.log(this.filteredTasks)
       }
     },
+    // タスクの追加
+    async addTask(newTask) {
+      try {
+        const response = await axios.post('http://localhost:5000/tasks', newTask)
+        const addedTask = response.data;
+        this.tasks.push(addedTask)
+      } catch (error) {
+        console.log("保存ができませんでした", error);
+      }
+    },
+    specificTask(selectedTask) {
+      this.selectedTask = selectedTask;
+    },
+    // タスクの削除
+    async removeTask(task) {
+      try{
+        const response = await axios.delete(`http://localhost:5000/tasks/${task.id}`, task); 
+        const index = this.tasks.findIndex(task => task.id === response.data.id);
+        if (index !== -1) {
+          this.tasks.splice(index, 1);
+        }
+        //this.tasksの配列から特定のデータを削除する
+      } catch(error) {
+        console.log('タスクの削除に失敗しました。', error)
+      }
+    }
+    
   }
 })

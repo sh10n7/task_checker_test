@@ -17,7 +17,6 @@ export const useGenreStore = defineStore('genre', {
       }
     },
     async addGenre(newGenre){
-      console.log(newGenre)
       try {
         const response = await axios.post('http://localhost:5000/genres', newGenre)
         const addedGenre = response.data

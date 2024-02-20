@@ -4,7 +4,7 @@
       <div>
         <h4 class="input_title">ジャンル</h4>
         <div class="task_genre">
-          <SelectComp v-model="task.genreId"/>
+          <SelectComp :genres="genreStore.genres" :value="task.genreId" @change="genreSelect"/>
         </div>
         <h4 class="input_title">タイトル</h4>
         <input type="text" v-model="task.name"/>
@@ -13,13 +13,18 @@
         <h4 class="input_title">期限</h4>
         <input class="input_date" type="date" v-model="task.deadlineDate"/>
       </div>
-      <input class="input_submit" type="button" value="送信" @click="Submit"/>
+      <input class="input_submit" type="button" value="送信" @click="submit"/>
+      <!-- taskが存在するか、またidプロパティがtaskオブジェクトに存在するかをチェック。 -->
+      <button v-if="task && task.id" type="button" class="button delete_button" @click="deleteTask">
+        このタスクを削除する
+      </button>
     </form>
 </template>
 
 <script>
 import SelectComp from './Select.vue'
-import axios from 'axios';
+import { useTaskStore } from '../stores/taskStore'
+import { useGenreStore } from '../stores/genreStore'
 
 export default {
   name: 'TaskBodyComp',
@@ -32,24 +37,40 @@ export default {
         name: '',
         explanation: '',
         deadlineDate: '',
-        status: '0',
+        status: 0,
         genreId: ''
-      }
+      },
+      taskStore: useTaskStore(),
+      genreStore: useGenreStore()
     }
   },
   methods: {
-    async Submit() {
+    async submit() {
       try {
-        console.log(this.task)
-        const response = await axios.post('http://localhost:5000/tasks', this.task)
-        console.log(response.data)
-        // 成功した場合、トップページ（例: '/'）へリダイレクト
-        // this.$router.push('/');
-      } catch (error) {
-        console.log("保存ができませんでした", error);
+        await this.taskStore.addTask(this.task);
+        this.$emit("close-modal");
+      }catch(error) {
+        console.log("タスクの登録ができませんでした", error)
+      }
+    },
+    genreSelect(e) {
+      this.task.genreId = Number(e.target.value)
+    },
+    async deleteTask() {
+      try {
+        await this.taskStore.removeTask(this.task);
+        this.$emit("close-modal")
+      }catch(error) {
+        console.log("タスクの削除ができませんでした", error)
       }
     }
+  },
+  async mounted(){
+    if(this.taskStore.selectedTask) {
+      this.task = await {...this.taskStore.selectedTask}
+    }
   }
+
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <ModalWindow v-model="showModal">
-    <component :is="component" />
+    <component :is="component" @close-modal="$emit('close-modal')" />
   </ModalWindow>
 </template>
 
@@ -20,7 +20,8 @@ export default {
     }
   },
   props: {
-    body: String
+    body: String,
+    task: Object
   },
   computed: {
     component: function() {

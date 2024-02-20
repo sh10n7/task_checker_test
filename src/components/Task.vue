@@ -4,26 +4,36 @@
         {{ formatDate(task.deadlineDate) }}
       </span>
       <div class="task_text_contents">
-        <h3 class="task_title">{{ task.name}}</h3>
+        <h3 class="task_title" @click="selectTask(task)">{{ task.name }}</h3>
         <p class="task_sentence">{{ task.explanation }}</p>
       </div>
       <div class="task_input_contents">
         <SelectComp />
       </div>
     </div>
+    <ModalComp body="taskBody" v-model="showModal" @close-modal="showModal = false"/>
 </template>
 
 <script>
 import SelectComp from '../components/Select.vue'
+import ModalComp from './Modal.vue'
+import { useTaskStore } from '@/stores/taskStore'
 
 export default {
   name: 'TaskComp',
   components: {
-    SelectComp
+    SelectComp,
+    ModalComp
  },
- props:{
-  task: Object
- },
+ data() {
+  return{
+    showModal: false,
+    taskStore: useTaskStore()
+    }
+  },
+  props:{
+    task: Object
+  },
  //日付の表示変換をするメソッド
  methods: {
   formatDate(dateString) {
@@ -32,8 +42,14 @@ export default {
     const month = date.getMonth() + 1; // getMonth()は0から始まる
     const day = date.getDate();
     return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-    }
+    },
+  selectTask(task){
+      this.taskStore.specificTask(task)
+      // モーダルのステータスも変更
+      this.showModal = !this.showModal
+    },
   },
+  //選択したtaskのidを取得し、specificTaskに状態管理
   computed: {
     taskStyle() {
       // 現在の日時より deadlineDate が後であるかをチェック

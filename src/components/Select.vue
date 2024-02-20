@@ -1,5 +1,5 @@
 <template>
-    <select class="select">
+    <select class="select" :value="initialValue">
       <option v-for="genre in genres" :key="genre.id" :value="genre.id">
         {{genre.name}}
       </option>
@@ -12,6 +12,7 @@ export default {
   name: 'SelectComp',
   props: {
     genres: Array,
+    initialValue: String
   },
 }
 
