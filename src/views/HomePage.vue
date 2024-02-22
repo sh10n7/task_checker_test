@@ -1,6 +1,6 @@
 
 <template>
-    <HeaderComp />
+    <HeaderComp/>
     <div class="genre">
       <SelectComp :genres="genreStore.genres" @change="changeSelectedGenreId"/>
       <AddCircleIcon class="add_circle_outline_icon" fontSize="medium" @click="showModal = true"/>

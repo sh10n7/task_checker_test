@@ -2,7 +2,7 @@
   <div class="header">
     <DoneAll class="header_icon" fontsize="large" />
     <span class="header-title">Task Checker</span>
-    <button class="logout-button" @click="handleSignOut">
+    <button v-if="isLoggedIn" class="logout-button" @click="handleSignOut">
       <span>Logout</span>
     </button>
   </div>
@@ -16,9 +16,11 @@ import { useRouter } from 'vue-router'; // useRouterをインポート
 export default {
   name: 'HeaderComp',
   components:{
-    DoneAll,
+    DoneAll
   },
-  setup() { // setup関数でuseRouterを使用
+  props: [ 'isLoggedIn'],
+  setup(){
+    // setup関数でuseRouterを使用 
     const router = useRouter();
 
     // methods:の代わりに呼び出したい関数を設定
