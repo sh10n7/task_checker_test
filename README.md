@@ -1,24 +1,64 @@
 # task_checker
+## 概要
+タスクの進捗管理アプリです。
+```
+・フロントエンド：vue.js
+・バックエンド: Node.js(Express) 
+・データベース: PostgleSQL(prisma使用)
+```
+
+## 機能一覧
+```
+・firebaseを用いたログイン・ログアウト機能
+・タスクの登録・編集・削除・スタータスの変更
+・タスクに紐づくジャンルの登録・削除
+```
 
 ## Project setup
+①node.jsのインストール
+
+②本リポジトリのクローン
+
+③firebaseの導入
 ```
-npm install
+①「使ってみる」をクリック
+②「プロジェクトを作成」をクリック
+③プロジェクト名を入力(任意の名前をつけてください)し、利用規約に同意の上、「続行」をクリック
+④「このプロジェクトでGoogleアナリティクスを有効にする」をOFFに変更し、「プロジェクトを作成」をクリック
+⑤「プロジェクトが準備できました」のポップアップが表示されたら、「続行」をクリック
+⑥プロジェクトページに遷移をしたら、</>(ウェブ)マークを選択
+⑦「ウェブアプリ名」に任意の名前を選択し、「アプリの登録」をクリック
+⑧Firebase SDKの追加の箇所で、「npmを使用する」を選択
+⑨コードブロック内に表示されている以下のキーをコピーし、アプリケーション内のfirebase.js内の環境変数部分にそれぞれ貼り付ける。
+
+===
+Config firebaseConfig = {
+ apiKey = ‘xxxxxx’
+ ~省略~
+ appId: ‘xxxxxx
+}
+===
+⑩「コンソール」に進むを選択
 ```
 
-### Compiles and hot-reloads for development
+④firebase Authenticationの追加
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+①コンソールのトップ画面の「Authentication」の項目をクリック
+②「始める」をクリック
+③「ログイン方法を追加してFirebaseAuthの利用を開始しましょう」の項目から「メール/パスワード」を選択
+④遷移後のページで、「メール/パスワード」の項目を有効にして「保存」をクリック
 ```
 
-### Lints and fixes files
+⑤パッケージのインストール
 ```
-npm run lint
+% npm install
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+⑥サーバーの起動
+localhost:8080にアクセスしてサインイン・サインアップの画面が表示されるか確認する。
+```
+% npm run serve
+```
+
+⑦バックエンド側のセットアップを実施。
+[こちら]()のリポジトリをクローンし、バックエンドのセットアップ対応も行う。
