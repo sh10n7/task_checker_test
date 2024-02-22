@@ -32,7 +32,7 @@
 ⑨コードブロック内に表示されている以下のキーをコピーし、アプリケーション内のfirebase.js内の環境変数部分にそれぞれ貼り付ける。
 
 ===
-Config firebaseConfig = {
+const firebaseConfig = {
  apiKey = ‘xxxxxx’
  ~省略~
  appId: ‘xxxxxx
