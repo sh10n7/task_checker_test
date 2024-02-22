@@ -1,10 +1,14 @@
 <template>
   <div class="header">
-    <DoneAll class="header_icon" fontsize="large" />
-    <span class="header-title">Task Checker</span>
-    <button v-if="isLoggedIn" class="logout-button" @click="handleSignOut">
-      <span>Logout</span>
-    </button>
+    <div>
+      <DoneAll class="header_icon" fontsize="large" />
+      <span class="header-title">Task Checker</span>
+    </div>
+    <div>
+      <button v-if="isLoggedIn" class="logout-button" @click="handleSignOut">
+        <span>ログアウト</span>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -41,12 +45,12 @@ export default {
 <style scoped>
   .header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width: 100%;
     height: 60px;
     background-color: white;
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+    padding: 0 30px;
   }
 
   .header_icon {
@@ -64,6 +68,16 @@ export default {
   .logout-button {
     display: flex;
     align-items: center;
+  }
+
+  .logout-button {
+    background-color: rgb(66, 163, 247);
+    color: white;
+    border-radius: 25px;
+    border-style: none;
+    padding: 8px 20px;
+    margin-bottom: 8px;
+    font-size: 15px;
   }
 
 </style>
