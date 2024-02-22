@@ -1,6 +1,6 @@
 
 <template>
-    <HeaderComp/>
+    <HeaderComp :isLoggedIn="isLoggedIn" />
     <div class="genre">
       <SelectComp :genres="genreStore.genres" @change="changeSelectedGenreId"/>
       <AddCircleIcon class="add_circle_outline_icon" fontSize="medium" @click="showModal = true"/>
@@ -21,6 +21,8 @@ import AddCircleIcon from 'vue-material-design-icons/PlusCircleOutline.vue'
 import ModalComp from '../components/Modal.vue'
 import { useGenreStore } from '../stores/genreStore'
 import { useTaskStore } from '../stores/taskStore'
+// import { auth } from '../firebase';
+// import { ref, onMounted } from 'vue';
 
 export default {
   name: 'HomePage',
@@ -46,6 +48,7 @@ export default {
       showModal: false,
       genreStore: useGenreStore(),
       taskStore: useTaskStore(),
+      isLoggedIn: true,
     }
   },
   methods: {
@@ -71,6 +74,17 @@ export default {
       console.error("データの読み込み中にエラーが発生しました：", error);
     }
   },
+  // onMounted(){
+  //   auth.onAuthStateChanged((authUser) => {
+  //       user.value = authUser;
+  //       if(user.value) {
+  //         isLoggedIn.value = true;
+  //         console.log(isLoggedIn.value)
+  //       } else {
+  //         isLoggedIn.value = false;
+  //       }
+  //     });
+  // }
 }
 </script>
 
