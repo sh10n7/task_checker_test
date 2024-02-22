@@ -1,5 +1,5 @@
 <template>
-    <HeaderComp :isLoggedIn="isLoggedIn.value"/>
+    <HeaderComp :isLoggedIn="userStore.isLoggedIn"/>
     <div class="form-body">
       <input type="email" v-model="email" placeholder="メールアドレス">
       <input type="password" v-model="password" placeholder="パスワード">
@@ -15,30 +15,27 @@
 import { ref, onMounted } from 'vue';
 import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '../firebase';
 import { useRouter } from 'vue-router'; 
-import  HeaderComp  from '../components/Header.vue'
+import  HeaderComp  from '../components/Header.vue';
+import { useUserStore } from '../stores/userStore';
 
 export default {
   components: {
     HeaderComp
   },
   setup() {
-    const user = ref(null);
+    // const user = ref(null);
     const email = ref('');
     const password = ref('');
     const router = useRouter();
-    const isLoggedIn = ref(false);
+    // const isLoggedIn = ref(false);
+    const userStore = useUserStore();
 
     onMounted(() => {
       // OnAuthStateChangedを使用して、認証状態に変更があったとき(サインインする、サインアウトする)に、コールバック関数を実施。
-      // 認証されたユーザー(authUser)をuser変数に代入する。
+      // store内で認証されたユーザー(authUser)をuser変数に代入する。
       auth.onAuthStateChanged((authUser) => {
-        user.value = authUser;
-        if(user.value) {
-          isLoggedIn.value = true;
-          console.log(isLoggedIn.value)
-        } else {
-          isLoggedIn.value = false;
-        }
+        const userStore = useUserStore();
+        userStore.checkAuth(authUser);
       });
     });
 
@@ -71,7 +68,7 @@ export default {
     };
 
 
-    return { user, email, password, handleSignUp, handleSignIn, handleSignOut, isLoggedIn };
+    return { email, password, userStore, handleSignUp, handleSignIn, handleSignOut };
   }
 };
 </script>
