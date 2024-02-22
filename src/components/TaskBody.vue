@@ -68,6 +68,7 @@ export default {
     async deleteTask() {
       try {
         await this.taskStore.removeTask(this.task);
+        this.taskStore.selectedTask = null;
         this.$emit("close-modal")
       }catch(error) {
         console.log("タスクの削除ができませんでした", error)
