@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <p>ログインしていません</p>
+    <HeaderComp />
     <input type="email" v-model="email" placeholder="メールアドレス">
     <input type="password" v-model="password" placeholder="パスワード">
     <button @click="handleSignUp">サインアップ</button>
     <button @click="handleSignIn">サインイン</button>
-  </div>
 </template>
 
 
@@ -13,8 +11,12 @@
 import { ref, onMounted } from 'vue';
 import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '../firebase';
 import { useRouter } from 'vue-router'; 
+import  HeaderComp  from '../components/Header.vue'
 
 export default {
+  components: {
+    HeaderComp
+  },
   setup() {
     const user = ref(null);
     const email = ref('');
