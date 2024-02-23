@@ -90,9 +90,12 @@ export default {
   border-radius: 5px;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
   position: relative;
-  cursor: pointer;
   top: 0;
   transition: top left ease 0.2s;
+}
+
+.task_title{
+  cursor: pointer;
 }
 
 .task:hover {
