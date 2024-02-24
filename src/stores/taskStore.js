@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import apiClient from "../api/axios";
 
 export const useTaskStore = defineStore('task', {
   state: () => ({
@@ -13,7 +13,7 @@ export const useTaskStore = defineStore('task', {
     // 全部のタスクデータを取得する
     async fetchAllTasks() {
       try {
-        const response = await axios.get('http://localhost:5000/tasks');
+        const response = await apiClient.get('/tasks');
         this.tasks = response.data;
         //初回読み込み時に、this.filteredTasksも全タスクを取得しておく。そうすることでフィルタがかかってない状態で全タスクを選択できる
         this.filteredTasks = this.tasks;
@@ -33,7 +33,7 @@ export const useTaskStore = defineStore('task', {
     // タスクの追加
     async addTask(newTask) {
       try {
-        const response = await axios.post('http://localhost:5000/tasks', newTask)
+        const response = await apiClient.post('/tasks', newTask)
         const addedTask = response.data;
         this.tasks.push(addedTask)
       } catch (error) {
@@ -46,7 +46,7 @@ export const useTaskStore = defineStore('task', {
     // タスクの削除
     async removeTask(task) {
       try{
-        const response = await axios.delete(`http://localhost:5000/tasks/${task.id}`, task); 
+        const response = await apiClient.delete(`/tasks/${task.id}`, task); 
         const index = this.tasks.findIndex(t => t.id === response.data.id);
         if (index !== -1) {
           this.tasks.splice(index, 1);
@@ -58,7 +58,7 @@ export const useTaskStore = defineStore('task', {
     },
     async updateTask(task) {
       try{
-        const response = await axios.put(`http://localhost:5000/tasks/${task.id}`, task)
+        const response = await apiClient.put(`/tasks/${task.id}`, task)
         //response.data.idと同じidのデータをthis.tasksから探し、response.dataのデータを上書きする。
         const index = this.tasks.findIndex(t => t.id === task.id);
         if (index !== -1) {
@@ -71,7 +71,7 @@ export const useTaskStore = defineStore('task', {
     async updateTaskStatus(taskId, newStatus){
       try{
         // taskのステータス更新のリクエストを送る
-        await axios.put(`http://localhost:5000/tasks/${taskId}/status`, {newStatus: newStatus})
+        await apiClient.put(`/tasks/${taskId}/status`, {newStatus: newStatus})
 
         //更新したステータスを該当タスクのステータスに紐付けする
         const index = this.tasks.findIndex(t => t.id === taskId);

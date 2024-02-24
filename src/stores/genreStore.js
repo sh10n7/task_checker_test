@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import apiClient from "../api/axios";
 
 export const useGenreStore = defineStore('genre', {
   state: () => ({
@@ -10,7 +10,7 @@ export const useGenreStore = defineStore('genre', {
     // 全部のジャンルデータを取得する
     async fetchAllGenres() {
       try {
-        const response = await axios.get('http://localhost:5000/genres');
+        const response = await apiClient.get('/genres');
         this.genres = response.data;
       } catch (error) {
         console.error('ジャンルデータの取得ができませんでした。', error);
@@ -18,7 +18,7 @@ export const useGenreStore = defineStore('genre', {
     },
     async addGenre(newGenre){
       try {
-        const response = await axios.post('http://localhost:5000/genres', newGenre)
+        const response = await apiClient.post('/genres', newGenre)
         const addedGenre = response.data
         // 追加したジャンルデータをthis.genresに追加する。
         this.genres.push({
@@ -32,7 +32,7 @@ export const useGenreStore = defineStore('genre', {
     async removeGenre(removeId) {
       try {
         // サーバーからジャンルを削除
-        await axios.delete(`http://localhost:5000/genres/${removeId}`);
+        await apiClient.delete(`/genres/${removeId}`);
         // ストアの状態からも削除
         this.genres = this.genres.filter(genre => genre.id !== removeId);
       } catch (error) {
