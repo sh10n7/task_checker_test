@@ -15,7 +15,7 @@
       </div>
       <input class="input_submit" type="button" value="送信" @click="submit"/>
       <!-- taskが存在するか、またidプロパティがtaskオブジェクトに存在するかをチェック。 -->
-      <button v-if="task && task.id" type="button" class="button delete_button" @click="deleteTask">
+      <button v-if="task && task.id" type="button" class="delete_button" @click="deleteTask">
         このタスクを削除する
       </button>
     </form>
