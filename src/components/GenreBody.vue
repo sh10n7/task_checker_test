@@ -1,5 +1,5 @@
 <template>
-  <div className="modal_body">
+  <div class="modal_body">
       <h2 class="input_menu">ジャンル編集</h2>
       <ul>
         <li class="genre_title" v-for="genre in genreStore.genres" :key="genre.id">
